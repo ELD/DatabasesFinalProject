@@ -28,6 +28,7 @@ def printStatement(cursor, query, temp, *types):
         print "-"*len(types)*int(temp)
         for row in results:
             for r in row:
+		r = str(r)
                 print ('{:^'+ temp +'}').format(r), "|",
             print ""
     except pg8000.Error as e:
