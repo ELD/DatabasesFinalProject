@@ -1,0 +1,48 @@
+\documentclass{article}
+\usepackage{geometry}
+
+\author{Eric Dattore, Gokul Natesan, Marissa Renfro}
+\title{Databases Project 6 Writeup}
+\date{}
+
+\begin{document}
+    \maketitle
+
+    \section*{Overview}
+    For this project, we decided to use financial data to load into the
+    database. Our decision was influenced by what we did for project 7.
+    For that project, we set out to find correlations between stock prices
+    in American stock markets versus the Chinese economy's performance.
+    We decided on this idea because China is becoming a much bigger player
+    in the world economy and directly influences American company's performance
+    as America is no longer the preeminent economic market.
+
+    Our inspiration for Project 7 came from finding an article that listed American
+    companies most likely to be imapcted by slowing economic activity in China. For this,
+    We planned to pull two years of stock data for three companies traded on the New York
+    Stock Exchange: BMW, Ferrari, and BHP Billiton. We also pulled data from the Shanghai Composite
+    Index to attempt to quantify the Chinese economy. Through the two, arguably disjoint, datasets, we
+    were hoping to see a correlation, or lack thereof, in the data.
+    \section*{Data Source}
+    The New York Stock Exchange data comes from the Yahoo Finance API. It has a wonderful Python
+    interface that makes querying for stock data easy. It returns it in an easy to consume JSON format
+    that Python can then turn into whatever format we need. For this, we created a CSV file of the
+    stock tickers and stock data. From there, we imported our CSV into Postgres into the tables that
+    were created to accomodate the CSV data.
+
+    The Shanghai Composite Index was fetched using a Python package called Quandl.
+    \section*{Database Schema}
+    The data isn't very relational besides the obvious association of a day's worth of data and the
+    stock ticker it's associated with. However, because we were looking at composite indexes and
+    individual stocks, we split the two entities into different tables. For composites, we have a
+    table for the composite name and the ID and then we have a composite data table that holds
+    the data with a foreign key pointing back to the composite's name in the composite table.
+
+    For the stock symbols, we have a table containing an ID and the name of the stock ticker. For
+    the stock data, itself, we have a separate table containing all that data with a foreign key
+    pointing back towards that stock symbols table.
+
+    The data itself was fairly simple to load, it just required the filtering of the unwanted
+    data. Using the APIs to query the data, we then filtered through and created CSV files that
+    we could then import into Postgres.
+\end{document}
