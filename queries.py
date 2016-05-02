@@ -1,7 +1,7 @@
 import getpass
 import pg8000
 
-login = input('login: ')
+login = raw_input('login: ')
 secret = getpass.getpass('password: ')
 
 credentials = {'user'    : login,
@@ -58,14 +58,18 @@ def runProgram(cursor):
     print("BBL correlation with SSE - 3")
     i = input("")
     if i < 1 or i > 3:
-        return False;
+        return False
     elif i == 1:
         racecorrelate(cursor)
     elif i == 2:
         bhpcorrelate(cursor)
     elif i == 3:
         bblcorrelate(cursor)
+    return True;
 
 x = True
 while(x):
     x = runProgram(cursor)
+
+cursor.close()
+db.close()
