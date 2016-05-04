@@ -28,9 +28,9 @@
     interface that makes querying for stock data easy. It returns it in an easy to consume JSON format
     that Python can then turn into whatever format we need. For this, we created a CSV file of the
     stock tickers and stock data. From there, we imported our CSV into Postgres into the tables that
-    were created to accomodate the CSV data.
-
-    The Shanghai Composite Index was fetched using a Python package called Quandl.
+    were created to accomodate the CSV data. It also turns out that the Shanghai Composite Index
+    data was available through the Yahoo Finance API as well under the ``000001.SS'' ticker. We were
+    able to gather all the data from a single source. This made acquiring the data easier.
     \section*{Database Schema}
     The data isn't very relational besides the obvious association of a day's worth of data and the
     stock ticker it's associated with. However, because we were looking at composite indexes and
@@ -43,6 +43,8 @@
     pointing back towards that stock symbols table.
 
     The data itself was fairly simple to load, it just required the filtering of the unwanted
-    data. Using the APIs to query the data, we then filtered through and created CSV files that
-    we could then import into Postgres.
+    data. Using the APIs to gather the data, we then execute individual insertion queries for
+    each ``bundle'' of data returned from the API. In hindsight the process would have likely
+    been quicker if we had built our own CSV files and just copied them into Postgres. Either way
+    our loading procedure worked and we loaded in all the data we needed.
 \end{document}
