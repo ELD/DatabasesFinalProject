@@ -26,11 +26,20 @@
     \section*{Data Source}
     The New York Stock Exchange data comes from the Yahoo Finance API. It has a wonderful Python
     interface that makes querying for stock data easy. It returns it in an easy to consume JSON format
-    that Python can then turn into whatever format we need. For this, we created a CSV file of the
-    stock tickers and stock data. From there, we imported our CSV into Postgres into the tables that
-    were created to accomodate the CSV data. It also turns out that the Shanghai Composite Index
+    that Python can then turn into whatever format we need. Once we had the data, we then inserted it
+    directly into the database rather than go through something like a CSV file and copy it to the server.
+    Given the ease by which we could insert data directly with queries, we figured it was easier to go this
+    route. In hindsight, the script would have likely been faster to execute if we had dumped a CSV and
+    imported that into Postgres.It also turns out that the Shanghai Composite Index
     data was available through the Yahoo Finance API as well under the ``000001.SS'' ticker. We were
     able to gather all the data from a single source. This made acquiring the data easier.
+
+    As far as we know, there are no restrictions on using the data. It's all publicly available
+    stock price data. Also, the biggest hurdle we ran into when gathering the data was using the
+    Python library itself. The documentation was scarce and it took quite a bit of trial and error
+    to figure out exactly how to fetch the data. Thankfully, Python has a REPL environment making it
+    easy to test out small snippets of code. This helped increase productivity when building the
+    loading script.
     \section*{Database Schema}
     The data isn't very relational besides the obvious association of a day's worth of data and the
     stock ticker it's associated with. However, because we were looking at composite indexes and
